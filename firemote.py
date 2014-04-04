@@ -72,8 +72,7 @@ while True :
             doAction = True
         else : 
             doAction = False
-        
-        
+            
         if doAction :
             print whatDo
             print len(whatDo) 
