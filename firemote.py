@@ -60,7 +60,7 @@ while True :
             
     #start listening for inputs
     while connected:
-        
+        time.sleep(button_delay) # cpu hogging fix
         buttons = wii.state['buttons'] # Sum of the buttons pressed (int)
 
         try :
@@ -93,7 +93,4 @@ while True :
 
             elif type(whatDo[0]) == tuple :
                 device.emit_combo(whatDo)
-
-        time.sleep(button_delay)
-        
-             
+          
