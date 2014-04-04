@@ -34,8 +34,8 @@ def action(a):
             cwiid.BTN_B + cwiid.BTN_A       : ("SAVE"),
             cwiid.BTN_UP                    : (uinput.KEY_LEFTCTRL, uinput.KEY_EQUAL),
             cwiid.BTN_DOWN                  : (uinput.KEY_LEFTCTRL, uinput.KEY_MINUS),
-            cwiid.BTN_LEFT                  : (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEDOWN),
-            cwiid.BTN_RIGHT                 : (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEUP),
+            cwiid.BTN_LEFT                  : (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEUP),
+            cwiid.BTN_RIGHT                 : (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEDOWN),
             cwiid.BTN_PLUS + cwiid.BTN_MINUS: ("QUIT")
         }[a]
                 
@@ -62,26 +62,24 @@ while True :
     while connected:
         
         buttons = wii.state['buttons'] # Sum of the buttons pressed (int)
-        
+
         try :
             whatDo = action(buttons)
         except KeyError :
             continue
-        
+
         if whatDo != None :
             doAction = True
         else : 
             doAction = False
-            
+
         if doAction :
-            print whatDo
-            print len(whatDo) 
             if whatDo == "SAVE" :
                 device.emit_combo([uinput.KEY_LEFTCTRL, uinput.KEY_S])
                 time.sleep(0.5)
                 device.emit_click(uinput.KEY_ENTER)
                 time.sleep(1)
-                
+
             elif whatDo == "QUIT" :
                 print '\nClosing connection ...'
                 wii.rumble = 1
@@ -89,13 +87,13 @@ while True :
                 wii.rumble = 0
                 wii = None
                 connected = False
- 
+
             elif type(whatDo[0]) == int :
                 device.emit_click(whatDo)
-            
+
             elif type(whatDo[0]) == tuple :
-                 device.emit_combo(whatDo)
-            
+                device.emit_combo(whatDo)
+
         time.sleep(button_delay)
         
              
