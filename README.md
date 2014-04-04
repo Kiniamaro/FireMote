@@ -11,7 +11,7 @@ a simple script to translate wiimote inputs to keyboard shortcuts for firefox
 + cwiid
 + Python cwiid (pip should work)
 + uinput ([ tuomasjjrasanen / python-uinput](https://github.com/tuomasjjrasanen/python-uinput))
-+ 
+
 
 ---
 ## Controls
