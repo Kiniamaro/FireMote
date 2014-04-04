@@ -13,7 +13,7 @@ a simple script to translate wiimote inputs to keyboard shortcuts for firefox
 + uinput ([ tuomasjjrasanen / python-uinput](https://github.com/tuomasjjrasanen/python-uinput))
 
 
----
+
 ## Controls
 
 ```
