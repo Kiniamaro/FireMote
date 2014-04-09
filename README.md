@@ -12,6 +12,11 @@ a simple script to translate wiimote inputs to keyboard shortcuts for firefox
 + Python cwiid (pip should work)
 + uinput ([ tuomasjjrasanen / python-uinput](https://github.com/tuomasjjrasanen/python-uinput))
 
+## Updates
+
+- ###V0.1
+  + Added mouse_mode
+  + A button for middle mouse click
 
 
 ## Controls
@@ -25,5 +30,14 @@ DPAD_UP ---> zoom in
 DPAD_DOWN --> zoom out
 B + DPAD ---> arrow keys
 B + A ---> save page
+A   ----> Middle Mouse click
+HOME ---> Toggles mouse mode
 
+MOUSE_MODE :
+
+  DPAD --> Move mouse
 ```
+## TODO
+
++ better implement mouse_mode
++ Make things prettier
