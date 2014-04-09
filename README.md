@@ -14,9 +14,9 @@ a simple script to translate wiimote inputs to keyboard shortcuts for firefox
 
 ## Updates
 
-##### V0.1
-  + Added mouse_mode
-  + A button for middle mouse click
+** V0.1 **
+  - Added mouse_mode
+  - A button for middle mouse click
 
 
 ## Controls
