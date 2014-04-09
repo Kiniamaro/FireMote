@@ -1,3 +1,5 @@
+#VERSION 0.1
+#
 #script made to be run in background that listens for a know wiimote
 # and lets it connect to the PC, once connected it acts as
 # a keyboard and can simulate keyboard key presses.
