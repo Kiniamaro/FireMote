@@ -1,11 +1,11 @@
-#VERSION 0.1
+# VERSION 0.1
 #
-#script made to be run in background that listens for a know wiimote
+# Script made to be run in background that listens for a known wiimote
 # and lets it connect to the PC, once connected it acts as
 # a keyboard and can simulate keyboard key presses.
 #
-# designed for an enanched firefox browsing experience.
-# but can easly be made into anything.
+# designed for an enhanced firefox browsing experience,
+# but can easily be made into anything.
 import time 
 
 import cwiid
@@ -48,7 +48,7 @@ device = uinput.Device([
                 uinput.REL_Y])
 
 # checks battery life and turn on lights
-# according to the batterie life (4 lights being > 80% and 0 lights being < 20% )                
+# according to the battery life (4 lights being > 80% and 0 lights being < 20% )                
 def get_battery_life(wiimote) : 
     max_life = cwiid.BATTERY_MAX
     percent_left = int(100.0 * wiimote.state['battery'] / max_life)
