@@ -11,9 +11,13 @@ import time
 import cwiid
 import uinput
 
-button_delay = 0.2
+button_delay = 0.01
 time_then = 0
 mouse_mode = False
+
+# needed for the anti key spam 
+can_do_action = True 
+
 
 button_actions = {
     cwiid.BTN_B + cwiid.BTN_UP: (uinput.KEY_LEFTCTRL, uinput.KEY_EQUAL),
@@ -27,7 +31,7 @@ button_actions = {
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
     cwiid.BTN_A: (uinput.BTN_MIDDLE),
-    cwiid.BTN_HOME: ('MOUSE')
+    cwiid.BTN_HOME: ('MOUSE')  
 }
 
 # must add the key to the device before using it
@@ -103,12 +107,15 @@ while True:
         try:
             what_do = action(buttons)
         except KeyError:
-            continue
-
-        if what_do is not None:
-            do_action = True
+            what_do = 'NONE'
+        
+        do_action = False
+        if what_do is not 'NONE':
+            if can_do_action:
+                do_action = True
+                can_do_action = False
         else:
-            do_action = False
+            can_do_action = True
 
         if do_action:
             # activate mouse mode and changed button_delay so things are faster
@@ -151,3 +158,4 @@ while True:
 
                 elif type(what_do[0]) == tuple:
                     device.emit_combo(what_do)
+         
