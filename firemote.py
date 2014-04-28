@@ -16,15 +16,15 @@ time_then = 0
 mouse_mode = False
 
 button_actions = {
-    cwiid.BTN_B + cwiid.BTN_UP: (uinput.KEY_UP),
-    cwiid.BTN_B + cwiid.BTN_DOWN: (uinput.KEY_DOWN),
-    cwiid.BTN_B + cwiid.BTN_LEFT: (uinput.KEY_LEFT),
-    cwiid.BTN_B + cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
+    cwiid.BTN_B + cwiid.BTN_UP: (uinput.KEY_LEFTCTRL, uinput.KEY_EQUAL),
+    cwiid.BTN_B + cwiid.BTN_DOWN: (uinput.KEY_LEFTCTRL, uinput.KEY_MINUS),
+    cwiid.BTN_B + cwiid.BTN_LEFT: (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEUP),
+    cwiid.BTN_B + cwiid.BTN_RIGHT: (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEDOWN),
     cwiid.BTN_B + cwiid.BTN_A: ('SAVE'),
-    cwiid.BTN_UP: (uinput.KEY_LEFTCTRL, uinput.KEY_EQUAL),
-    cwiid.BTN_DOWN: (uinput.KEY_LEFTCTRL, uinput.KEY_MINUS),
-    cwiid.BTN_LEFT: (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEUP),
-    cwiid.BTN_RIGHT: (uinput.KEY_LEFTCTRL, uinput.KEY_PAGEDOWN),
+    cwiid.BTN_UP: (uinput.KEY_UP),
+    cwiid.BTN_DOWN: (uinput.KEY_DOWN),
+    cwiid.BTN_LEFT: (uinput.KEY_LEFT),
+    cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
     cwiid.BTN_A: (uinput.BTN_MIDDLE),
     cwiid.BTN_HOME: ('MOUSE')
