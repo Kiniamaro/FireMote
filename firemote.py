@@ -31,7 +31,7 @@ button_actions = {
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
     cwiid.BTN_A: (uinput.BTN_MIDDLE),
-    cwiid.BTN_HOME: ('MOUSE')  
+    cwiid.BTN_HOME: ('MOUSE')
 }
 
 # must add the key to the device before using it
