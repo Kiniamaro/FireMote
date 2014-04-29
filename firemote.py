@@ -18,7 +18,6 @@ mouse_mode = False
 # needed for the anti key spam 
 can_do_action = True 
 
-
 button_actions = {
     cwiid.BTN_B + cwiid.BTN_UP: (uinput.KEY_LEFTCTRL, uinput.KEY_EQUAL),
     cwiid.BTN_B + cwiid.BTN_DOWN: (uinput.KEY_LEFTCTRL, uinput.KEY_MINUS),
@@ -31,8 +30,6 @@ button_actions = {
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
     cwiid.BTN_A: (uinput.BTN_MIDDLE)
-    cwiid.BTN_A: (uinput.BTN_MIDDLE),
-    cwiid.BTN_HOME: ('MOUSE')
 }
 
 # must add the key to the device before using it
