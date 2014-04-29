@@ -1,4 +1,4 @@
-# VERSION 0.3
+# VERSION 0.3.1
 #
 # Script made to be run in background that listens for a known wiimote
 # and lets it connect to the PC, once connected it acts as
@@ -14,6 +14,8 @@ import uinput
 button_delay = 0.01
 time_then = 0
 mouse_mode = False
+BTN_Z = 1
+BTN_C = 2
 
 # needed for the anti key spam 
 can_do_action = True 
@@ -29,7 +31,8 @@ button_actions = {
     cwiid.BTN_LEFT: (uinput.KEY_LEFT),
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
-    cwiid.BTN_A: (uinput.BTN_MIDDLE)
+    cwiid.BTN_A: (uinput.BTN_MIDDLE),
+    BTN_Z: (uinput.BTN_LEFT)
 }
 
 # must add the key to the device before using it
@@ -47,7 +50,8 @@ device = uinput.Device([
     uinput.KEY_RIGHT,
     uinput.BTN_MIDDLE,
     uinput.REL_X,
-    uinput.REL_Y
+    uinput.REL_Y,
+    uinput.BTN_LEFT
 ])
 
 # checks battery life and turn on lights
@@ -117,13 +121,20 @@ while True:
     while connected:
         time.sleep(button_delay)  # cpu hogging fix
         buttons = wii.state['buttons']  # Sum of the buttons pressed (int)
+        nun_buttons = 0 # buttons for the nunchuk
         # checks battery life every minute
         if ((time.time() * 1000) - 60000 >= time_then):
             wii.led = get_battery_life(wii)
             time_then = (time.time() * 1000)
+            
+        try:
+            nunchuk = wii.state['nunchuk']['stick']
+            nun_buttons = wii.state['nunchuk']['buttons']
+        except:
+            nunchuk = None
 
         try:
-            what_do = action(buttons)
+            what_do = action(buttons + nun_buttons)
         except KeyError:
             what_do = 'NONE'
         
@@ -136,14 +147,6 @@ while True:
             can_do_action = True
 
         if do_action:
-            # activate mouse mode and changed button_delay so things are faster
-            if what_do == 'MOUSE':
-                mouse_mode = not mouse_mode
-                if (mouse_mode):
-                    button_delay = 0.02
-                else:
-                    button_delay = 0.2
-                time.sleep(2)
 
             if what_do == "SAVE":
                 device.emit_combo([uinput.KEY_LEFTCTRL, uinput.KEY_S])
@@ -164,11 +167,6 @@ while True:
 
             elif type(what_do[0]) == tuple:
                 device.emit_combo(what_do)
-         
-        try:
-            nunchuk = wii.state['nunchuk']['stick']
-        except:
-            nunchuk = None
          
         # Nunchuk support, Real Mouse mode
         if nunchuk:
