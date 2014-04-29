@@ -10,6 +10,10 @@ a simple script to translate wiimote inputs to keyboard shortcuts for firefox
 
 ## Changelog
 
+**V0.3**
+  - Added Nunchuk Support!
+  - you now control the mouse using the nunchuk's joystick
+
 **V0.2**
   - You now no longer can spam an input by holding a button
   - Changing Tabs and zooming now require holding the 'B' button
@@ -36,8 +40,7 @@ A   --> Middle Mouse click
 HOME --> Toggles mouse mode
 
 MOUSE_MODE :
-
-  DPAD --> Move mouse
+  Nunchuk's Joystick
 ```
 ## TODO
 
