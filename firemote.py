@@ -1,4 +1,4 @@
-# VERSION 0.1
+# VERSION 0.3
 #
 # Script made to be run in background that listens for a known wiimote
 # and lets it connect to the PC, once connected it acts as
@@ -30,12 +30,9 @@ button_actions = {
     cwiid.BTN_LEFT: (uinput.KEY_LEFT),
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
-<<<<<<< HEAD
     cwiid.BTN_A: (uinput.BTN_MIDDLE)
-=======
     cwiid.BTN_A: (uinput.BTN_MIDDLE),
     cwiid.BTN_HOME: ('MOUSE')
->>>>>>> 63acf0207c7bb9c0256de8e7eab6f07b93608a9f
 }
 
 # must add the key to the device before using it
@@ -56,7 +53,6 @@ device = uinput.Device([
     uinput.REL_Y
 ])
 
-
 # checks battery life and turn on lights
 # according to the battery life (4 lights being > 80% and 0 lights being < 20%)
 def get_battery_life(wiimote):
@@ -75,7 +71,6 @@ def get_battery_life(wiimote):
         led = 16  # no light
     return led
 
-
 # all button combos
 def action(a):
     return button_actions[a]
@@ -85,19 +80,21 @@ def joystick_to_mouse(x, y):
     mov_x = 0
     mov_y = 0
     
-    # X deadZone
+    # basicaly checks if the X is not in the DeadZone
+    # and if it isnt tells the mouse to move left or right
+    # if X is bigger or smaller than the DeadZone
+    # values found by trial and error, too lazy to make
+    # proper variables for now.
     if x < 103:
         mov_x = x - 103
     elif x > 143:
         mov_x = x - 143
     
-    # Y deadZone
+    # Ditto
     if y < 97:
         mov_y = y - 97
     elif y > 157:
-        mov_y = y - 157
-    
-     
+        mov_y = y - 157 
     device.emit(uinput.REL_Y, -mov_y / 10)
     device.emit(uinput.REL_X, mov_x / 10)
 
