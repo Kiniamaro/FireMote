@@ -30,8 +30,7 @@ button_actions = {
     cwiid.BTN_LEFT: (uinput.KEY_LEFT),
     cwiid.BTN_RIGHT: (uinput.KEY_RIGHT),
     cwiid.BTN_PLUS + cwiid.BTN_MINUS: ('QUIT'),
-    cwiid.BTN_A: (uinput.BTN_MIDDLE),
-    cwiid.BTN_HOME: ('MOUSE')  
+    cwiid.BTN_A: (uinput.BTN_MIDDLE)
 }
 
 # must add the key to the device before using it
@@ -76,6 +75,27 @@ def get_battery_life(wiimote):
 def action(a):
     return button_actions[a]
 
+# Mouse_mode    
+def joystick_to_mouse(x, y):
+    mov_x = 0
+    mov_y = 0
+    
+    # X deadZone
+    if x < 103:
+        mov_x = x - 103
+    elif x > 143:
+        mov_x = x - 143
+    
+    # Y deadZone
+    if y < 97:
+        mov_y = y - 97
+    elif y > 157:
+        mov_y = y - 157
+    
+     
+    device.emit(uinput.REL_Y, -mov_y / 10)
+    device.emit(uinput.REL_X, mov_x / 10)
+
 time.sleep(1)
 connected = False
 
@@ -92,13 +112,12 @@ while True:
             wii.rumble = 1
             time.sleep(0.4)
             wii.rumble = 0
-            wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC
+            wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_EXT
 
     # start listening for inputs
     while connected:
         time.sleep(button_delay)  # cpu hogging fix
         buttons = wii.state['buttons']  # Sum of the buttons pressed (int)
-
         # checks battery life every minute
         if ((time.time() * 1000) - 60000 >= time_then):
             wii.led = get_battery_life(wii)
@@ -127,35 +146,36 @@ while True:
                     button_delay = 0.2
                 time.sleep(2)
 
-            # Move the mouse cursor with DPAD when activated,
-            # no other input works
-            if mouse_mode:
-                if buttons == cwiid.BTN_UP:
-                    device.emit(uinput.REL_Y, -5)
-                if buttons == cwiid.BTN_DOWN:
-                    device.emit(uinput.REL_Y, 5)
-                if buttons == cwiid.BTN_LEFT:
-                    device.emit(uinput.REL_X, -5)
-                if buttons == cwiid.BTN_RIGHT:
-                    device.emit(uinput.REL_X, 5)
-            else:
-                if what_do == "SAVE":
-                    device.emit_combo([uinput.KEY_LEFTCTRL, uinput.KEY_S])
-                    time.sleep(0.5)
-                    device.emit_click(uinput.KEY_ENTER)
-                    time.sleep(1)
+            if what_do == "SAVE":
+                device.emit_combo([uinput.KEY_LEFTCTRL, uinput.KEY_S])
+                time.sleep(0.5)
+                device.emit_click(uinput.KEY_ENTER)
+                time.sleep(1)
 
-                if what_do == "QUIT":
-                    print '\nClosing connection ...'
-                    wii.rumble = 1
-                    time.sleep(1)
-                    wii.rumble = 0
-                    wii = None
-                    connected = False
+            if what_do == "QUIT":
+                print '\nClosing connection ...'
+                wii.rumble = 1
+                time.sleep(1)
+                wii.rumble = 0
+                wii = None
+                connected = False
 
-                if type(what_do[0]) == int:
-                    device.emit_click(what_do)
+            if type(what_do[0]) == int:
+                device.emit_click(what_do)
 
-                elif type(what_do[0]) == tuple:
-                    device.emit_combo(what_do)
+            elif type(what_do[0]) == tuple:
+                device.emit_combo(what_do)
+         
+        try:
+            nunchuk = wii.state['nunchuk']['stick']
+        except:
+            nunchuk = None
+         
+        # Nunchuk support, Real Mouse mode
+        if nunchuk:
+            # tupple with coordinates, (x, y)
+            joystick = nunchuk
+            joystick_to_mouse(joystick[0], joystick[1]) 
+
+         
          
